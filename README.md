@@ -1,7 +1,7 @@
-batch-garmin-map
-================
+osm-to-gps-map
+==============
 
-Tools to download tiles and merge to a garmin image. Some hacking is required to download any particular area.
+Tools to download osm tiles and merge to a garmin image. Some hacking is required to download any particular area.
 
 * download.py downloads a set of tiles for an area.
 * batchsplit.py creates a mkgmap script of downloaded tiles. This requires the mkgmap splitter tool: http://www.mkgmap.org.uk/doc/splitter.html
