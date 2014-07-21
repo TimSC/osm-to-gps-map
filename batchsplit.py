@@ -1,9 +1,16 @@
+
+#Process osm tiles to a mkgmap template file
+#java -jar mkgmap-r2638/mkgmap.jar --gmapsupp -c template.args
+
 import tiles, os, sortosm
 
 if __name__=="__main__":
 
-	tileBL = tiles.deg2num(51.7882364, -3.4765251, 12)
-	tileTR = tiles.deg2num(52.3707994, -2.2782056, 12)
+	#tileBL = tiles.deg2num(51.7882364, -3.4765251, 12)
+	#tileTR = tiles.deg2num(52.3707994, -2.2782056, 12)
+
+	tileBL = tiles.deg2num(51.00434, -4.02825, 12) #Exmoor
+	tileTR = tiles.deg2num(51.26630, -3.26607, 12) #Exmoor
 
 	print tileBL, tileTR
 	count = 0

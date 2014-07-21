@@ -18,8 +18,14 @@ def GetTile(x, y, zoom, outFina):
 	outFi.write(body)
 	return 1
 
-tileBL = tiles.deg2num(51.7882364, -3.4765251, 12)
-tileTR = tiles.deg2num(52.3707994, -2.2782056, 12)
+#tileBL = tiles.deg2num(51.7882364, -3.4765251, 12) #Hampshire?
+#tileTR = tiles.deg2num(52.3707994, -2.2782056, 12) #Hampshire?
+
+#tileBL = tiles.deg2num(27.673799, 32.1679688, 12) #Sinai
+#tileTR = tiles.deg2num(31.297328, 35.0024414, 12) #Sinai
+
+tileBL = tiles.deg2num(51.00434, -4.02825, 12) #Exmoor
+tileTR = tiles.deg2num(51.26630, -3.26607, 12) #Exmoor
 
 print tileBL, tileTR
 count = 0
