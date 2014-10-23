@@ -37,7 +37,9 @@ if __name__=="__main__":
 	out.write("<osm version='0.6' upload='true' generator='py'>\n")
 
 	#lats, lons = [51.383075,50.705752], [-1.955713,-0.729294]
-	lats, lons = [51.26630,51.00434], [-3.26607,-4.02825] #Exmoor
+	#lats, lons = [51.26630,51.00434], [-3.26607,-4.02825] #Exmoor
+	#lats, lons = [49.0018439,49.3644891], [-0.6632996,0.0054932] #Caen
+	lats, lons = [27.673799,31.297328], [32.1679688,35.0024414] #Sinai
 
 	zoom = 12
 	xtile1, ytile1 = slippytiles.deg2num(min(lats), min(lons), zoom)
