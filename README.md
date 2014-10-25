@@ -4,7 +4,7 @@ osm-to-gps-map
 Tools to download osm tiles and merge to a garmin image. Some hacking is required to download any particular area.
 
 * download.py downloads a set of tiles for an area.
-* batchsplit.py creates a mkgmap script of downloaded tiles. This requires the mkgmap splitter tool: http://www.mkgmap.org.uk/doc/splitter.html
+* retile.py creates a mkgmap script of downloaded tiles. This depends on the mkgmap splitter tool: http://www.mkgmap.org.uk/doc/splitter.html
 * garmin map created with: java -jar mkgmap-r2638/mkgmap.jar --gmapsupp -c template.args
 * mergeTiles.py merges many tiles into a single large osm file 
 
