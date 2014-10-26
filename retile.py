@@ -1,6 +1,6 @@
 
 #Process osm tiles to a mkgmap template file
-#java -jar ../mkgmap-r3337/mkgmap.jar --max-jobs=4 --drive-on-left --mapname=63290001 --description="FOSM map" --copyright-message="CC BY-SA 2.0" --gmapsupp -c template.args
+#nice java -jar ../mkgmap-r3337/mkgmap.jar --max-jobs=4 --drive-on-left --mapname=63290001 --description="FOSM map (C) fosm, OpenStreetMap" --copyright-message="CC BY-SA 2.0" --route --add-pois-to-areas --add-pois-to-lines --road-name-pois --index --gmapsupp -c template.args
 
 import tiles, os, sortosm, bz2
 import mergeTiles
