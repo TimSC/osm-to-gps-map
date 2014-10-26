@@ -1,6 +1,6 @@
 
 #Process osm tiles to a mkgmap template file
-#java -jar mkgmap-r2638/mkgmap.jar --gmapsupp -c template.args
+#java -jar ../mkgmap-r3337/mkgmap.jar --max-jobs=4 --drive-on-left --mapname=63290001 --description="FOSM map" --copyright-message="CC BY-SA 2.0" --gmapsupp -c template.args
 
 import tiles, os, sortosm, bz2
 import mergeTiles
@@ -160,7 +160,7 @@ if __name__=="__main__":
 		validMapIds.append(tileId)
 
 	for tileId in validMapIds:
-		cmd = "java -jar ../splitter-r412/splitter.jar --mapid={0} tmp{1}.osm.bz2".format(mapId, tileId)
+		cmd = "java -jar ../splitter-r412/splitter.jar --mapid={0} tmp{0}.osm.bz2".format(tileId)
 		os.system(cmd)
 
 	template = "# family-id: 981\n"
