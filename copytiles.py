@@ -16,15 +16,18 @@ if __name__ == "__main__":
 	#tileBL = tiles.deg2num(49.0018439, -0.6632996, 12) #Caen
 	#tileTR = tiles.deg2num(49.3644891, 0.0054932, 12) #Caen
 
-	tileBL = tiles.deg2num(49.6676278, -14.765625, 12) #UK and Eire
-	tileTR = tiles.deg2num(61.1856247, 2.2851563, 12) #UK and Eire
+	#tileBL = tiles.deg2num(49.6676278, -14.765625, 12) #UK and Eire
+	#tileTR = tiles.deg2num(61.1856247, 2.2851563, 12) #UK and Eire
 
-	#tileBL = tiles.deg2num(-47.279229, 107.7539063, 12) #Aus
-	#tileTR = tiles.deg2num(-9.2756222, 162.5976563, 12) #Aus
+	tileBL = tiles.deg2num(-47.279229, 107.7539063, 12) #Aus
+	tileTR = tiles.deg2num(-9.2756222, 162.5976563, 12) #Aus
 
 	print tileBL, tileTR
 	count = 0
-	outFolder = "uk-and-ireland"
+	outFolder = "australia"
+	if not os.path.exists(outFolder):
+		os.mkdir(outFolder)
+
 	#exit(0)
 	for x in range(tileBL[0], tileTR[0] + 1):
 		for y in range(tileTR[1], tileBL[1] + 1):
