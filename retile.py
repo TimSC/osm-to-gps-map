@@ -100,8 +100,12 @@ if __name__=="__main__":
 	#lons = (-4.02825, -3.26607) #Exmoor
 	#minZoom = 8
 
-	lats = (49.6676278, 61.1856247) #UK and Eire
-	lons = (2.2851563, -14.765625) #UK and Eire
+	#lats = (49.6676278, 61.1856247) #UK and Eire
+	#lons = (2.2851563, -14.765625) #UK and Eire
+	#minZoom = 6
+
+	lats = (-47.279229, -9.2756222) #Aus
+	lons = (107.7539063, 162.5976563) #Aus
 	minZoom = 6
 
 	count = 0

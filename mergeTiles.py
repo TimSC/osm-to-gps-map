@@ -4,7 +4,12 @@ import slippytiles
 
 def MergeFile(fina, ty, existing, fiOut, verbose = 1):
 	fi = bz2.BZ2File(fina)
-	root = ET.fromstring(fi.read())
+	try:
+		root = ET.fromstring(fi.read())
+	except ET.ParseError as err:
+		print "Xml parsing error in", fina
+		return 0
+
 	count = 0
 
 	for el in root:
