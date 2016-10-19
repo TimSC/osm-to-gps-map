@@ -1,4 +1,5 @@
-import math, os, bz2, urlutil, tiles, time, pycurl
+import math, os, bz2, urlutil, tiles, time, pycurl, cStringIO, gzip
+from pyo5m import OsmData
 
 def GetTile(x, y, zoom, outFina):
 	
@@ -25,8 +26,18 @@ def GetTile(x, y, zoom, outFina):
 			time.sleep(timeout)
 			timeout *= 2
 
-	outFi = bz2.BZ2File(outFina,"w")
-	outFi.write(body)
+	extSp = os.path.splitext(outFina)
+	extSp2 = os.path.splitext(extSp[0])
+
+	if extSp[1] == ".bz2" and extSp2[1] == ".osm":
+		outFi = bz2.BZ2File(outFina,"w")
+		outFi.write(body)
+
+	if extSp[1] == ".gz" and extSp2[1] == ".o5m":
+		osmData = OsmData.OsmData()
+		osmData.LoadFromOsmXml(cStringIO.StringIO(body))
+		osmData.SaveToO5m(gzip.open(outFina, "wb"))
+
 	return 1
 
 if __name__ == "__main__":
@@ -48,8 +59,11 @@ if __name__ == "__main__":
 	#tileBL = tiles.deg2num(49.6676278, -14.765625, 12) #UK and Eire
 	#tileTR = tiles.deg2num(61.1856247, 2.2851563, 12) #UK and Eire
 
-	tileBL = tiles.deg2num(-47.279229, 107.7539063, 12) #Aus
-	tileTR = tiles.deg2num(-9.2756222, 162.5976563, 12) #Aus
+	#tileBL = tiles.deg2num(-47.279229, 107.7539063, 12) #Aus
+	#tileTR = tiles.deg2num(-9.2756222, 162.5976563, 12) #Aus
+
+	tileBL = tiles.deg2num(50.6599084, -1.3046265, 12) #Around portsmouth, uk
+	tileTR = tiles.deg2num(50.9618867, -0.8061218, 12)
 
 	print tileBL, tileTR
 	count = 0
@@ -65,6 +79,7 @@ if __name__ == "__main__":
 				os.mkdir("12/{0}".format(x))
 
 			outFina = "12/{0}/{1}.osm.bz2".format(x, y)
+			#outFina = "12/{0}/{1}.o5m.gz".format(x, y)
 			overwrite = False
 			if not os.path.exists(outFina) or overwrite:
 				GetTile(x, y, 12, outFina)

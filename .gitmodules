@@ -1,0 +1,3 @@
+[submodule "pyo5m"]
+	path = pyo5m
+	url = https://github.com/TimSC/pyo5m.git
