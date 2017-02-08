@@ -62,8 +62,8 @@ if __name__ == "__main__":
 	#tileBL = tiles.deg2num(-47.279229, 107.7539063, 12) #Aus
 	#tileTR = tiles.deg2num(-9.2756222, 162.5976563, 12) #Aus
 
-	tileBL = tiles.deg2num(50.6599084, -1.3046265, 12) #Around portsmouth, uk
-	tileTR = tiles.deg2num(50.9618867, -0.8061218, 12)
+	tileBL = tiles.deg2num(50.6599084, -1.3046265, 14) #Around portsmouth, uk
+	tileTR = tiles.deg2num(50.9618867, -0.8061218, 14)
 
 	print tileBL, tileTR
 	count = 0

@@ -1,5 +1,5 @@
 from pyo5m import o5m
-import gzip
+import gzip, sys
 
 #Used to renumber ways as OsmAnd map creator does not like 64-bit ways
 
@@ -63,8 +63,15 @@ class RenumberWaysRels(object):
 
 if __name__ == "__main__":
 
-	fiIn = gzip.open("/home/tim/Desktop/uk-eire-fosm-2017-jan.o5m.gz", "rb")
-	fiOut = gzip.open("/home/tim/Desktop/out.o5m.gz", "wb")
+	finaIn = "uk-eire-fosm-2017-jan.o5m.gz"
+	finaOut = "renumbered.o5m.gz"
+
+	if len(sys.argv) >= 2:
+		finaIn = sys.argv[1]
+	if len(sys.argv) >= 3:
+		finaOut = sys.argv[2]
+	fiIn = gzip.open(finaIn, "rb")
+	fiOut = gzip.open(finaOut, "wb")
 
 	dec = o5m.O5mDecode(fiIn)
 	enc = o5m.O5mEncode(fiOut)
