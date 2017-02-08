@@ -50,6 +50,26 @@ class RenumberWaysRels(object):
 	def StoreRelation(self, objectId, metaData, tags, refs):
 		if self.prevType is not None and self.prevType != "r":
 			self.output.Reset()
+
+		remappedRefs = []
+		for typeStr, refId, role in refs:
+			if typeStr == "node":
+				remappedRefs.append((typeStr, refId, role))
+			elif typeStr == "way":
+				if refId in self.wayRemap:
+					remappedRefs.append((typeStr, self.wayRemap[refId], role))
+				else:
+					self.wayRemap[objectId] = self.nextWay
+					remappedRefs.append((typeStr, self.nextWay, role))
+					self.nextWay += 1
+			elif typeStr == "relation":
+				if refId in self.relRemap:
+					remappedRefs.append((typeStr, self.relRemap[refId], role))
+				else:
+					self.relRemap[objectId] = self.nextRel
+					remappedRefs.append((typeStr, self.nextRel, role))
+					self.nextRel += 1
+
 		if objectId in self.relRemap:
 			self.output.StoreRelation(self.relRemap[objectId], metaData, tags, refs)
 		else:
