@@ -1,13 +1,17 @@
 import pycurl
 import os.path
-import StringIO
+import sys
+if sys.version_info[0] < 3:
+	import cStringIO as BytesIO
+else:
+	from io import BytesIO as BytesIO
 
 #baseurl = "http://localhost/m/microcosm.php"
 #baseurl = "http://api06.dev.openstreetmap.org/api"
 #baseurl = "http://www.openstreetmap.org/api"
 
 def Put(url, stringIn, userpass = None):
-	p = StringIO.StringIO(stringIn)
+	p = BytesIO(stringIn)
 	
 	c = pycurl.Curl()
 	c.setopt(pycurl.URL, url)
@@ -18,16 +22,16 @@ def Put(url, stringIn, userpass = None):
 	#header = ["Content-Length: "+str(len(stringIn))]
 	#c.setopt(pycurl.HTTPHEADER, header)
 
-	b = StringIO.StringIO()
+	b = BytesIO()
 	c.setopt(pycurl.WRITEFUNCTION, b.write)
-	h = StringIO.StringIO()
+	h = BytesIO()
 	c.setopt(pycurl.HEADERFUNCTION, h.write)  
 
 	c.perform()
 	return b.getvalue(), h.getvalue()
 
 def Delete(url, stringIn, userpass = None):
-	p = StringIO.StringIO(stringIn)
+	p = BytesIO(stringIn)
 	
 	c = pycurl.Curl()
 	c.setopt(pycurl.URL, url)
@@ -35,16 +39,16 @@ def Delete(url, stringIn, userpass = None):
 	c.setopt(pycurl.READFUNCTION, p.read)
 	if userpass is not None: c.setopt(pycurl.USERPWD, userpass)
 	
-	b = StringIO.StringIO()
+	b = BytesIO()
 	c.setopt(pycurl.WRITEFUNCTION, b.write)
-	h = StringIO.StringIO()
+	h = BytesIO()
 	c.setopt(pycurl.HEADERFUNCTION, h.write)  
 
 	c.perform()
 	return b.getvalue(), h.getvalue()
 
 def Post(url, stringIn, userpass = None):
-	p = StringIO.StringIO(stringIn)
+	p = BytesIO(stringIn)
 	
 	c = pycurl.Curl()
 	c.setopt(pycurl.URL, url)
@@ -52,9 +56,9 @@ def Post(url, stringIn, userpass = None):
 	c.setopt(pycurl.POSTFIELDS, stringIn)
 	if userpass is not None: c.setopt(pycurl.USERPWD, userpass)
 	
-	b = StringIO.StringIO()
+	b = BytesIO()
 	c.setopt(pycurl.WRITEFUNCTION, b.write)
-	h = StringIO.StringIO()
+	h = BytesIO()
 	c.setopt(pycurl.HEADERFUNCTION, h.write)  
 
 	c.perform()
@@ -65,16 +69,16 @@ def Get(url, userpass = None):
 	c.setopt(pycurl.URL, url)
 	if userpass is not None: c.setopt(pycurl.USERPWD, userpass)
 
-	b = StringIO.StringIO()
+	b = BytesIO()
 	c.setopt(pycurl.WRITEFUNCTION, b.write)
-	h = StringIO.StringIO()
+	h = BytesIO()
 	c.setopt(pycurl.HEADERFUNCTION, h.write)  
 
 	c.perform()
 	return b.getvalue(), h.getvalue()
 
 def HeaderToDict(header):
-	hs = header.split("\n")
+	hs = header.decode("UTF-8").split("\n")
 	hsd = dict()
 	for line in hs:
 		if line.find(":")==-1: continue
@@ -84,7 +88,7 @@ def HeaderToDict(header):
 
 def HeaderResponseCode(header):
 	prefix = "HTTP/1.1 "
-	hs = header.split("\n")
+	hs = header.decode("UTF-8").split("\n")
 	for line in hs:
 		#print line
 		line = line.rstrip("\r")

@@ -1,13 +1,19 @@
-import math, os, bz2, urlutil, tiles, time, pycurl, cStringIO, gzip
+from __future__ import print_function
+import math, os, bz2, urlutil, tiles, time, pycurl, gzip, sys
 from pyo5m import OsmData
+if sys.version_info[0] < 3:
+	import cStringIO as BytesIO
+else:
+	from io import BytesIO as BytesIO
 
 def GetTile(x, y, zoom, outFina):
 	
 	topLeft = tiles.num2deg(x, y, zoom)
 	bottomRight = tiles.num2deg(x+1, y+1, zoom)
 
-	url = "http://fosm.org/api/0.6/map?bbox={0},{1},{2},{3}".format(topLeft[1],bottomRight[0],bottomRight[1],topLeft[0])
-	print url
+	#url = "http://fosm.org/api/0.6/map?bbox={0},{1},{2},{3}".format(topLeft[1],bottomRight[0],bottomRight[1],topLeft[0])
+	url = "http://sodium:8010/api/0.6/map?bbox={0},{1},{2},{3}".format(topLeft[1],bottomRight[0],bottomRight[1],topLeft[0])
+	print (url)
 	timeout = 1
 	waiting = 1
 	
@@ -15,7 +21,7 @@ def GetTile(x, y, zoom, outFina):
 		try:
 			body, header = urlutil.Get(url)
 			responseCode = urlutil.HeaderResponseCode(header)
-			print responseCode
+			print (responseCode)
 			if responseCode == "HTTP/1.1 200 OK":
 				waiting = 0
 			else:
@@ -35,7 +41,7 @@ def GetTile(x, y, zoom, outFina):
 
 	if extSp[1] == ".gz" and extSp2[1] == ".o5m":
 		osmData = OsmData.OsmData()
-		osmData.LoadFromOsmXml(cStringIO.StringIO(body))
+		osmData.LoadFromOsmXml(BytesIO(body))
 		osmData.SaveToO5m(gzip.open(outFina, "wb"))
 
 	return 1
@@ -62,15 +68,15 @@ if __name__ == "__main__":
 	#tileBL = tiles.deg2num(-47.279229, 107.7539063, 12) #Aus
 	#tileTR = tiles.deg2num(-9.2756222, 162.5976563, 12) #Aus
 
-	tileBL = tiles.deg2num(50.6599084, -1.3046265, 14) #Around portsmouth, uk
-	tileTR = tiles.deg2num(50.9618867, -0.8061218, 14)
+	tileBL = tiles.deg2num(50.6599084, -1.3046265, 12) #Around portsmouth, uk
+	tileTR = tiles.deg2num(50.9618867, -0.8061218, 12)
 
-	print tileBL, tileTR
+	print (tileBL, tileTR)
 	count = 0
 	#exit(0)
 	for x in range(tileBL[0], tileTR[0] + 1):
 		for y in range(tileTR[1], tileBL[1] + 1):
-			print count, (tileBL[0] - tileTR[0] + 1) * (tileTR[1] - tileBL[1] + 1), x, y
+			print (count, (tileBL[0] - tileTR[0] + 1) * (tileTR[1] - tileBL[1] + 1), x, y)
 			count += 1
 
 			if not os.path.isdir("12"):
