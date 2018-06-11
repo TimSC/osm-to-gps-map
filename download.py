@@ -1,10 +1,7 @@
 from __future__ import print_function
 import math, os, bz2, urlutil, tiles, time, pycurl, gzip, sys
 from pyo5m import OsmData
-if sys.version_info[0] < 3:
-	import cStringIO as BytesIO
-else:
-	from io import BytesIO as BytesIO
+from io import BytesIO
 
 def GetTile(x, y, zoom, outFina):
 	
@@ -62,14 +59,14 @@ if __name__ == "__main__":
 	#tileBL = tiles.deg2num(49.0018439, -0.6632996, 12) #Caen
 	#tileTR = tiles.deg2num(49.3644891, 0.0054932, 12) #Caen
 
-	#tileBL = tiles.deg2num(49.6676278, -14.765625, 12) #UK and Eire
-	#tileTR = tiles.deg2num(61.1856247, 2.2851563, 12) #UK and Eire
+	tileBL = tiles.deg2num(49.6676278, -14.765625, 12) #UK and Eire
+	tileTR = tiles.deg2num(61.1856247, 2.2851563, 12) #UK and Eire
 
 	#tileBL = tiles.deg2num(-47.279229, 107.7539063, 12) #Aus
 	#tileTR = tiles.deg2num(-9.2756222, 162.5976563, 12) #Aus
 
-	tileBL = tiles.deg2num(50.6599084, -1.3046265, 12) #Around portsmouth, uk
-	tileTR = tiles.deg2num(50.9618867, -0.8061218, 12)
+	#tileBL = tiles.deg2num(50.6599084, -1.3046265, 12) #Around portsmouth, uk
+	#tileTR = tiles.deg2num(50.9618867, -0.8061218, 12)
 
 	print (tileBL, tileTR)
 	count = 0

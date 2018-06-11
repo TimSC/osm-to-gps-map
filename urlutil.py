@@ -1,10 +1,7 @@
 import pycurl
 import os.path
 import sys
-if sys.version_info[0] < 3:
-	import cStringIO as BytesIO
-else:
-	from io import BytesIO as BytesIO
+from io import BytesIO
 
 #baseurl = "http://localhost/m/microcosm.php"
 #baseurl = "http://api06.dev.openstreetmap.org/api"
