@@ -1,4 +1,4 @@
-from future import print_function
+from __future__ import print_function
 import os
 
 def ProcessPath(pthIn, pthOut):
