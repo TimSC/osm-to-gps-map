@@ -1,5 +1,5 @@
 from __future__ import print_function
-import math, os, bz2, urlutil, tiles, time, pycurl, gzip, sys
+import math, os, bz2, urlutil, tiles, time, pycurl, gzip, sys, tarfile
 from pyo5m import OsmData
 from io import BytesIO
 
@@ -44,8 +44,8 @@ def GetTile(x, y, zoom, outFina):
 	return 1
 
 if __name__ == "__main__":
-	#tileBL = (0, 4095) #Planet
-	#tileTR = (4095, 0) #Planet
+	tileBL = (0, 4095) #Planet
+	tileTR = (4095, 0) #Planet
 
 	#tileBL = tiles.deg2num(51.7882364, -3.4765251, 12) #Hampshire?
 	#tileTR = tiles.deg2num(52.3707994, -2.2782056, 12) #Hampshire?
@@ -59,8 +59,8 @@ if __name__ == "__main__":
 	#tileBL = tiles.deg2num(49.0018439, -0.6632996, 12) #Caen
 	#tileTR = tiles.deg2num(49.3644891, 0.0054932, 12) #Caen
 
-	tileBL = tiles.deg2num(49.6676278, -14.765625, 12) #UK and Eire
-	tileTR = tiles.deg2num(61.1856247, 2.2851563, 12) #UK and Eire
+	#tileBL = tiles.deg2num(49.6676278, -14.765625, 12) #UK and Eire
+	#tileTR = tiles.deg2num(61.1856247, 2.2851563, 12) #UK and Eire
 
 	#tileBL = tiles.deg2num(-47.279229, 107.7539063, 12) #Aus
 	#tileTR = tiles.deg2num(-9.2756222, 162.5976563, 12) #Aus
@@ -68,11 +68,24 @@ if __name__ == "__main__":
 	#tileBL = tiles.deg2num(50.6599084, -1.3046265, 12) #Around portsmouth, uk
 	#tileTR = tiles.deg2num(50.9618867, -0.8061218, 12)
 
+	outFileTemplate1 = "{0}/{1}.osm.bz2"
+	outFileTemplate = "12/{0}/{1}.osm.bz2"
+	#outFileTemplate = "12/{0}/{1}.o5m.gz"
+	tarCol = False
+
 	print (tileBL, tileTR)
 	count = 0
-	#exit(0)
+
 	for x in range(tileBL[0], tileTR[0] + 1):
+
+		#Check if column tar exists
+		if tarCol:
+			tarFina = "12/{0}.tar".format(x)
+			if os.path.exists(tarFina):
+				continue
+
 		for y in range(tileTR[1], tileBL[1] + 1):
+
 			print (count, (tileBL[0] - tileTR[0] + 1) * (tileTR[1] - tileBL[1] + 1), x, y)
 			count += 1
 
@@ -81,10 +94,39 @@ if __name__ == "__main__":
 			if not os.path.isdir("12/{0}".format(x)):
 				os.mkdir("12/{0}".format(x))
 
-			outFina = "12/{0}/{1}.osm.bz2".format(x, y)
-			#outFina = "12/{0}/{1}.o5m.gz".format(x, y)
+			outFina = outFileTemplate.format(x, y)
 			overwrite = False
 			if not os.path.exists(outFina) or overwrite:
 				GetTile(x, y, 12, outFina)
 				#time.sleep(1)
+		
+		#Combine column into tar
+		if tarCol:
+			print ("Tarring column")
+			t = tarfile.open(tarFina, mode='w')
+
+			for y in range(tileTR[1], tileBL[1] + 1):
+				tileFina = outFileTemplate.format(x, y)
+
+				tileFi = open(tileFina, 'rb')
+				tileFi.seek(0, 2)
+				fileSize = tileFi.tell()
+				tileFi.seek(0)
+				tileStat = os.stat(tileFina)
+
+				ti = tarfile.TarInfo()
+				ti.name = outFileTemplate1.format(x, y)
+				ti.size = fileSize
+				ti.mtime = tileStat.st_mtime
+				t.addfile(ti, tileFi)
+
+				tileFi.close()
+
+			t.close()
+
+			for y in range(tileTR[1], tileBL[1] + 1):
+				tileFina = outFileTemplate.format(x, y)
+				os.unlink(tileFina)
+
+			os.rmdir("12/{0}".format(x))
 

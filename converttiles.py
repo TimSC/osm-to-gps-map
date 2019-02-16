@@ -19,5 +19,5 @@ def ProcessPath(pthIn, pthOut):
 			os.system(cmd)
 
 if __name__=="__main__":
-	ProcessPath("/home/tim/dev/osm-to-gps-map/12", "/home/tim/dev/osm-to-gps-map/12copy")
+	ProcessPath("/home/tim/dev/mapdev/wight/12osmgz", "/home/tim/dev/mapdev/wight/12")
 	
