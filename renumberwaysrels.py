@@ -71,10 +71,10 @@ class RenumberWaysRels(object):
 					self.nextRel += 1
 
 		if objectId in self.relRemap:
-			self.output.StoreRelation(self.relRemap[objectId], metaData, tags, refs)
+			self.output.StoreRelation(self.relRemap[objectId], metaData, tags, remappedRefs)
 		else:
 			self.relRemap[objectId] = self.nextRel
-			self.output.StoreRelation(objectId, metaData, tags, refs)
+			self.output.StoreRelation(objectId, metaData, tags, remappedRefs)
 			self.nextRel += 1
 		self.prevType = "r"
 		self.countRelations += 1
