@@ -18,10 +18,17 @@ if __name__=="__main__":
 		#if fina != "Ireland,_Dublin.o5m.gz": continue
 		print (fina)
 
+		outFina = finaSplit[0]+".pbf"
+		if os.path.exists(outFina):
+			continue
+
 		renumFina = os.path.join(tmpDir.name, fina)
 		RenumberFosmFile(os.path.join(pth, fina), renumFina)
 
-		pbfFina = os.path.join("/home/tim/mapbuild/osmand-pbf", finaSplit[0]+".pbf")
+		outFina = outFina.replace(".o5m.pbf", ".osm.pbf")
+
+		pbfFina = os.path.join("/home/tim/mapbuild/osmand-pbf", outFina)
 		subprocess.run(["osmconvert", renumFina, "-o={}".format(pbfFina)])
 
+		os.unlink(renumFina)
 

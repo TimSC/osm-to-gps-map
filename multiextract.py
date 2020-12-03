@@ -3,16 +3,26 @@ import subprocess
 
 if __name__=="__main__":
 
-	if not os.path.exists("extracts"):
-		os.mkdir("extracts")
+	pth = '/var/www/pycrocosm/pgmap'
 
-	for area in os.listdir("regions"):
+	extractsPth = os.path.join(pth, "extracts")
+	if not os.path.exists(extractsPth):
+		os.mkdir(extractsPth)
+
+	regionsPth = "/home/tim/dev/osm-to-gps-map/regions"
+	listDir = os.listdir(regionsPth)
+	listDir.sort()
+	for area in listDir:
 		print (area)
-	
 		areaSplit = os.path.splitext(area)
-		cmd = ["./extract", "--wkt={}".format(os.path.join("regions", area)), "--out={}".format(os.path.join("regions", "{}.o5m.gz".format(areaSplit[0])))]
+		if areaSplit[1] != ".wkt": continue
+	
+		outFina = os.path.join(extractsPth, "{}.o5m.gz".format(areaSplit[0]))
+		if os.path.exists(outFina):
+			continue
+		cmd = ["./extract", "--wkt={}".format(os.path.join(regionsPth, area)), "--out={}".format(outFina)]
 		print (cmd)
-		subprocess.run(cmd)
-		#os.system(" ".join(cmd))
+		subprocess.run(cmd, cwd=pth)
+		os.system(" ".join(cmd))
 
 
