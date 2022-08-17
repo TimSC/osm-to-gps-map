@@ -3,7 +3,7 @@ import subprocess
 
 if __name__=="__main__":
 
-	pth = '/var/www/pycrocosm/pgmap'
+	pth = '/var/pycrocosm/pgmap'
 
 	extractsPth = os.path.join(pth, "extracts")
 	if not os.path.exists(extractsPth):

@@ -1,4 +1,5 @@
 #Process data from https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-1-states-provinces/
+#convert to WKT using ogr2ogr -f CSV ne_10m_admin_1_states_provinces.wkt ne_10m_admin_1_states_provinces.shp -lco GEOMETRY=AS_WKT
 import os
 import csv
 import sys
