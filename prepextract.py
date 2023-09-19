@@ -5,7 +5,7 @@ from renumberfosm import RenumberFosmFile
 
 if __name__=="__main__":
 
-	pth = "/var/www/pycrocosm/pgmap/regions"
+	pth = "/home/tim/Desktop/fosm2023/extracts"
 	finaLi = os.listdir(pth)
 	finaLi.sort()
 
@@ -19,15 +19,15 @@ if __name__=="__main__":
 		print (fina)
 
 		outFina = finaSplit[0]+".pbf"
-		if os.path.exists(outFina):
+		outFina = outFina.replace(".o5m.pbf", ".osm.pbf")
+		pbfFina = os.path.join("/home/tim/mapbuild/osmand-pbf", outFina)
+
+		if os.path.exists(pbfFina):
 			continue
 
 		renumFina = os.path.join(tmpDir.name, fina)
 		RenumberFosmFile(os.path.join(pth, fina), renumFina)
 
-		outFina = outFina.replace(".o5m.pbf", ".osm.pbf")
-
-		pbfFina = os.path.join("/home/tim/mapbuild/osmand-pbf", outFina)
 		subprocess.run(["osmconvert", renumFina, "-o={}".format(pbfFina)])
 
 		os.unlink(renumFina)

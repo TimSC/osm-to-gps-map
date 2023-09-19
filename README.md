@@ -8,6 +8,14 @@ Tools to download osm tiles and merge to a garmin image. Some hacking is require
 * garmin map created with: java -jar mkgmap-r2638/mkgmap.jar --gmapsupp -c template.args
 * mergeTiles.py merges many tiles into a single large osm file 
 
+Tools for OsmAndMapCreator
+--------------------------
+
+* regions.py convert regions to WKT format
+* multiextract.py extract areas from pycrocosm/pgmap
+* prepextract.py renumber extracted areas to 32-bit IDs and convert to pbf format
+* pbftoosmand convert a folder of pbfs to osmand files using OsmAndMapCreator
+
 License
 =======
 

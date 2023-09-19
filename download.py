@@ -9,7 +9,7 @@ def GetTile(x, y, zoom, outFina):
 	bottomRight = tiles.num2deg(x+1, y+1, zoom)
 
 	#url = "http://fosm.org/api/0.6/map?bbox={0},{1},{2},{3}".format(topLeft[1],bottomRight[0],bottomRight[1],topLeft[0])
-	url = "http://sodium:8010/api/0.6/map?bbox={0},{1},{2},{3}".format(topLeft[1],bottomRight[0],bottomRight[1],topLeft[0])
+	url = "http://localhost:8000/api/0.6/map?bbox={0},{1},{2},{3}".format(topLeft[1],bottomRight[0],bottomRight[1],topLeft[0])
 	print (url)
 	timeout = 1
 	waiting = 1
@@ -44,8 +44,8 @@ def GetTile(x, y, zoom, outFina):
 	return 1
 
 if __name__ == "__main__":
-	tileBL = (0, 4095) #Planet
-	tileTR = (4095, 0) #Planet
+	#tileBL = (0, 4095) #Planet
+	#tileTR = (4095, 0) #Planet
 
 	#tileBL = tiles.deg2num(51.7882364, -3.4765251, 12) #Hampshire?
 	#tileTR = tiles.deg2num(52.3707994, -2.2782056, 12) #Hampshire?
@@ -59,8 +59,8 @@ if __name__ == "__main__":
 	#tileBL = tiles.deg2num(49.0018439, -0.6632996, 12) #Caen
 	#tileTR = tiles.deg2num(49.3644891, 0.0054932, 12) #Caen
 
-	#tileBL = tiles.deg2num(49.6676278, -14.765625, 12) #UK and Eire
-	#tileTR = tiles.deg2num(61.1856247, 2.2851563, 12) #UK and Eire
+	tileBL = tiles.deg2num(49.6676278, -14.765625, 12) #UK and Eire
+	tileTR = tiles.deg2num(61.1856247, 2.2851563, 12) #UK and Eire
 
 	#tileBL = tiles.deg2num(-47.279229, 107.7539063, 12) #Aus
 	#tileTR = tiles.deg2num(-9.2756222, 162.5976563, 12) #Aus
