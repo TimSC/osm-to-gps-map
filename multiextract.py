@@ -3,7 +3,7 @@ import subprocess
 
 if __name__=="__main__":
 
-	pth = '/var/pycrocosm/pgmap'
+	pth = '/home/tim/dev/pycrocosm/pgmap'
 
 	extractsPth = os.path.join(pth, "extracts")
 	if not os.path.exists(extractsPth):
@@ -20,9 +20,9 @@ if __name__=="__main__":
 		outFina = os.path.join(extractsPth, "{}.o5m.gz".format(areaSplit[0]))
 		if os.path.exists(outFina):
 			continue
-		cmd = ["./extract", "--wkt={}".format(os.path.join(regionsPth, area)), "--out={}".format(outFina)]
+		cmd = ["/home/tim/dev/pycrocosm/pgmap/extract", "--wkt={}".format(os.path.join(regionsPth, area)), "--out={}".format(outFina)]
 		print (cmd)
 		subprocess.run(cmd, cwd=pth)
-		os.system(" ".join(cmd))
+		#os.system(" ".join(cmd))
 
 
